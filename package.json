@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:staged": "npm test -- --findRelatedTests"
   },
   "keywords": [],
   "author": "",
@@ -25,16 +26,5 @@
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.1",
     "typescript": "^4.1.5"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint 'src/**' --fix",
-      "npm run test"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }
