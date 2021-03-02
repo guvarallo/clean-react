@@ -15,7 +15,7 @@ module.exports = {
       '@': path.join(__dirname, 'src')
     }
   },
-  modeule: {
+  module: {
     rules: [
       {
         test: /\.ts(x?)$/,
