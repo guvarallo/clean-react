@@ -1,4 +1,6 @@
 import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import faker from 'faker'
 import 'jest-localstorage-mock'
 import {
@@ -22,12 +24,16 @@ type SutParams = {
   validationError: string
 }
 
+const history = createMemoryHistory()
+
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
   validationStub.errorMessage = params?.validationError
   const sut = render(
-    <Login validation={validationStub} authentication={authenticationSpy} />
+    <Router history={history}>
+      <Login validation={validationStub} authentication={authenticationSpy} />
+    </Router>
   )
   return { sut, authenticationSpy }
 }
@@ -65,6 +71,7 @@ const simulateStatusForField = (
   validationError?: string
 ): void => {
   const status = sut.getByTestId(`${fieldName}-status`)
+
   expect(status.title).toBe(validationError || 'Alright!')
   expect(status.textContent).toBe(validationError ? '🔴' : '🟢')
 }
@@ -91,6 +98,7 @@ describe('Login Component', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     populateEmailField(sut)
+
     simulateStatusForField(sut, 'email', validationError)
   })
 
@@ -98,18 +106,21 @@ describe('Login Component', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     populatePasswordlField(sut)
+
     simulateStatusForField(sut, 'password', validationError)
   })
 
   test('Should show valid email state if Validation succeeds', () => {
     const { sut } = makeSut()
     populateEmailField(sut)
+
     simulateStatusForField(sut, 'email')
   })
 
   test('Should show valid password state if Validation succeeds', () => {
     const { sut } = makeSut()
     populatePasswordlField(sut)
+
     simulateStatusForField(sut, 'password')
   })
 
@@ -118,6 +129,7 @@ describe('Login Component', () => {
     populateEmailField(sut)
     populatePasswordlField(sut)
     const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+
     expect(submitButton.disabled).toBe(false)
   })
 
@@ -125,6 +137,7 @@ describe('Login Component', () => {
     const { sut } = makeSut()
     simulateValidSubmit(sut)
     const spinner = sut.getByTestId('spinner')
+
     expect(spinner).toBeTruthy()
   })
 
@@ -133,6 +146,7 @@ describe('Login Component', () => {
     const email = faker.internet.email()
     const password = faker.internet.password()
     simulateValidSubmit(sut, email, password)
+
     expect(authenticationSpy.params).toEqual({ email, password })
   })
 
@@ -140,6 +154,7 @@ describe('Login Component', () => {
     const { sut, authenticationSpy } = makeSut()
     simulateValidSubmit(sut)
     simulateValidSubmit(sut)
+
     expect(authenticationSpy.callsCount).toBe(1)
   })
 
@@ -148,6 +163,7 @@ describe('Login Component', () => {
     const { sut, authenticationSpy } = makeSut({ validationError })
     populateEmailField(sut)
     fireEvent.submit(sut.getByTestId('form'))
+
     expect(authenticationSpy.callsCount).toBe(0)
   })
 
@@ -170,9 +186,18 @@ describe('Login Component', () => {
     const { sut, authenticationSpy } = makeSut()
     simulateValidSubmit(sut)
     await waitFor(() => sut.getByTestId('form'))
+
     expect(localStorage.setItem).toHaveBeenCalledWith(
       'accessToken',
       authenticationSpy.account.accessToken
     )
+  })
+
+  test('Should go to signup page', () => {
+    const { sut } = makeSut()
+    const signup = sut.getByTestId('signup')
+    fireEvent.click(signup)
+    expect(history.length).toBe(2)
+    expect(history.location.pathname).toBe('/signup')
   })
 })
