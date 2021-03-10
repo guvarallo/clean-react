@@ -43,7 +43,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
     event.preventDefault()
     try {
       if (state.isLoading || state.emailError || state.passwordError) return
-      setState({ ...state, isLoading: true })
+      setState({ ...state, isLoading: true, mainError: '' })
       const account = await authentication.auth({
         email: state.email,
         password: state.password
