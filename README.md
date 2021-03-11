@@ -3,6 +3,7 @@
 <div align="center">
 
 [![Build Status](https://travis-ci.com/guvarallo/clean-react.svg?branch=master)](https://travis-ci.com/guvarallo/clean-react)
+[![Coverage Status](https://coveralls.io/repos/github/guvarallo/clean-react/badge.svg?branch=master)](https://coveralls.io/github/guvarallo/clean-react?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 </div>
