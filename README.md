@@ -1,4 +1,11 @@
-<h1 align="center">Clean React</h1>
+<h1 align="center">Clean React (4Devs - Survey for Devs)</h1>
+
+<div align="center">
+
+[![Build Status](https://travis-ci.com/guvarallo/clean-react.svg?branch=master)](https://travis-ci.com/guvarallo/clean-react)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+
+</div>
 
 ## Purpose
 
