@@ -4,3 +4,4 @@ coverage
 assets
 public
 *.scss
+*.json
