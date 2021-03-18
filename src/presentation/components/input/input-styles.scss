@@ -5,6 +5,19 @@
   margin-top: 40px;
   border-bottom: 2px solid $disabled;
 
+  &[data-status='valid'] {
+    border-bottom-color: $valid;
+
+    &::after {
+      background-color: $valid;
+      transition: 500ms ease;
+    }
+
+    .status {
+      cursor: text;
+    }
+  }
+
   &::after {
     content: '';
     width: 100%;
@@ -19,6 +32,8 @@
   }
 
   &:focus-within {
+    border-color: transparent;
+
     &::after {
       transform: scaleX(1);
     }
@@ -51,7 +66,7 @@
   .status {
     position: absolute;
     right: 8px;
-    font-size: 10px;
+    font-size: 12px;
     cursor: help;
   }
 }

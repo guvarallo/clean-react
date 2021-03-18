@@ -6,38 +6,50 @@ describe('Login', () => {
   beforeEach(() => cy.visit('login'))
 
   it('Should load with correct initial state', () => {
+    cy.getByTestId('email-wrap').should('have.attr', 'data-status', 'invalid')
     cy.getByTestId('email-status')
       .should('have.attr', 'title', 'Required field')
-      .should('contain.text', '🔴')
+      .should('contain.text', '⚠️')
+    cy.getByTestId('password-wrap').should(
+      'have.attr',
+      'data-status',
+      'invalid'
+    )
     cy.getByTestId('password-status')
       .should('have.attr', 'title', 'Required field')
-      .should('contain.text', '🔴')
+      .should('contain.text', '⚠️')
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
   it('Should present error state if form is invalid', () => {
+    cy.getByTestId('email-wrap').should('have.attr', 'data-status', 'invalid')
     cy.getByTestId('email').type(faker.random.word())
     cy.getByTestId('email-status')
       .should('have.attr', 'title', 'Invalid value')
-      .should('contain.text', '🔴')
+      .should('contain.text', '⚠️')
+    cy.getByTestId('password-wrap').should(
+      'have.attr',
+      'data-status',
+      'invalid'
+    )
     cy.getByTestId('password').type(faker.random.alphaNumeric(4))
     cy.getByTestId('password-status')
       .should('have.attr', 'title', 'Invalid value')
-      .should('contain.text', '🔴')
+      .should('contain.text', '⚠️')
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
   it('Should present valid state if form is valid', () => {
     cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('email-status')
-      .should('have.attr', 'title', 'Alright!')
-      .should('contain.text', '🟢')
+    cy.getByTestId('email-wrap').should('have.attr', 'data-status', 'valid')
+    cy.getByTestId('email-wrap').should('not.have.attr', 'title')
+    cy.getByTestId('email-status').should('contain.text', '✔')
     cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    cy.getByTestId('password-status')
-      .should('have.attr', 'title', 'Alright!')
-      .should('contain.text', '🟢')
+    cy.getByTestId('password-wrap').should('have.attr', 'data-status', 'valid')
+    cy.getByTestId('password-wrap').should('not.have.attr', 'title')
+    cy.getByTestId('password-status').should('contain.text', '✔')
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })

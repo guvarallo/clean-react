@@ -15,7 +15,11 @@ const Input: React.FC<Props> = (props: Props) => {
   const error = state[`${props.name}Error`]
 
   return (
-    <div className={Styles.inputWrap}>
+    <div
+      data-testid={`${props.name}-wrap`}
+      className={Styles.inputWrap}
+      data-status={error ? 'invalid' : 'valid'}
+    >
       <input
         {...props}
         ref={inputRef}
@@ -28,10 +32,10 @@ const Input: React.FC<Props> = (props: Props) => {
       </label>
       <span
         data-testid={`${props.name}-status`}
-        title={error || 'Alright!'}
+        title={error}
         className={Styles.status}
       >
-        {error ? '🔴' : '🟢'}
+        {error ? '⚠️' : '✔'}
       </span>
     </div>
   )
