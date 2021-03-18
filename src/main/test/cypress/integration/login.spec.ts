@@ -53,4 +53,19 @@ describe('Login', () => {
       .getByTestId('main-error').should('contain.text', 'Wrong Credentials')
     cy.url().should('eq', `${baseUrl}/login`)
   })
+
+  it('Should save accessToken if valid credentials are provided', () => {
+    cy.getByTestId('email').type('tester@tester.com')
+    cy.getByTestId('password').type('tester')
+    cy.getByTestId('submit').click()
+    cy.getByTestId('error-wrap')
+      .getByTestId('spinner').should('exist')
+      .getByTestId('main-error').should('not.exist')
+      .getByTestId('spinner').should('not.exist')
+      .getByTestId('main-error').should('not.exist')
+    cy.url().should('eq', `${baseUrl}/`)
+    cy.window().then(window => {
+      return assert.isOk(window.localStorage.getItem('accessToken'))
+    })
+  })
 })
