@@ -70,4 +70,20 @@ describe('SignUp', () => {
     )
     cy.url().should('eq', `${baseUrl}/signup`)
   })
+
+  it('Should present UnexpectedError if invalid data is returned', () => {
+    cy.intercept('POST', /signup/, {
+      statusCode: 200,
+      body: {
+        invalidProperty: faker.random.uuid()
+      }
+    })
+    fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
+    submit()
+    cy.getByTestId('main-error').should(
+      'contain.text',
+      'An error has occurred. Try again later'
+    )
+    cy.url().should('eq', `${baseUrl}/signup`)
+  })
 })
