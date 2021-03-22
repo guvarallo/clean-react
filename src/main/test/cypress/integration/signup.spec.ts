@@ -86,4 +86,20 @@ describe('SignUp', () => {
     )
     cy.url().should('eq', `${baseUrl}/signup`)
   })
+
+  it('Should save accessToken on success', () => {
+    cy.intercept('POST', /signup/, {
+      statusCode: 200,
+      body: {
+        accessToken: faker.random.uuid()
+      }
+    })
+    fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
+    submit()
+    cy.getByTestId('main-error').should('not.exist')
+    cy.url().should('eq', `${baseUrl}/`)
+    cy.window().then(window => {
+      return assert.isOk(window.localStorage.getItem('accessToken'))
+    })
+  })
 })
