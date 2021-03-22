@@ -12,9 +12,19 @@ export const testInputStatus = (
     .should('contain.text', status)
 }
 
-export const fillFormCorrectly = (): void => {
-  cy.getByTestId('email').type(faker.internet.email())
-  cy.getByTestId('password').type(faker.random.alphaNumeric(5))
+export const fillFormCorrectly = (
+  email: string,
+  password: string,
+  name?: string,
+  passwordConfirmation?: string
+): void => {
+  const pass = faker.random.alphaNumeric(5)
+  cy.getByTestId(email).type(faker.internet.email())
+  cy.getByTestId(password).type(pass)
+  if (name && passwordConfirmation) {
+    cy.getByTestId(name).type(faker.name.firstName())
+    cy.getByTestId(passwordConfirmation).type(pass)
+  }
 }
 
 export const submit = (): void => {

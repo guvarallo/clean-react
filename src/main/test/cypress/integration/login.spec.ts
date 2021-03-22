@@ -28,7 +28,7 @@ describe('Login', () => {
   })
 
   it('Should present valid state if form is valid', () => {
-    fillFormCorrectly()
+    fillFormCorrectly('email', 'password')
     testInputStatus('email', 'valid', 'Looks good', '✔')
     testInputStatus('password', 'valid', 'Looks good', '✔')
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
@@ -42,7 +42,7 @@ describe('Login', () => {
         error: faker.random.words()
       }
     })
-    fillFormCorrectly()
+    fillFormCorrectly('email', 'password')
     submit()
     cy.getByTestId('main-error').should('contain.text', 'Wrong Credentials')
     cy.url().should('eq', `${baseUrl}/login`)
@@ -55,7 +55,7 @@ describe('Login', () => {
         error: faker.random.words()
       }
     })
-    fillFormCorrectly()
+    fillFormCorrectly('email', 'password')
     submit()
     cy.getByTestId('main-error').should(
       'contain.text',
@@ -71,7 +71,7 @@ describe('Login', () => {
         invalidProperty: faker.random.uuid()
       }
     })
-    fillFormCorrectly()
+    fillFormCorrectly('email', 'password')
     submit()
     cy.getByTestId('main-error').should(
       'contain.text',
@@ -87,7 +87,7 @@ describe('Login', () => {
         accessToken: faker.random.uuid()
       }
     })
-    fillFormCorrectly()
+    fillFormCorrectly('email', 'password')
     submit()
     cy.getByTestId('main-error').should('not.exist')
     cy.url().should('eq', `${baseUrl}/`)
@@ -103,7 +103,7 @@ describe('Login', () => {
         accessToken: faker.random.uuid()
       }
     }).as('request')
-    fillFormCorrectly()
+    fillFormCorrectly('email', 'password')
     cy.getByTestId('submit').dblclick()
     cy.get('@request.all').should('have.length', 1)
   })
