@@ -102,4 +102,16 @@ describe('SignUp', () => {
       return assert.isOk(window.localStorage.getItem('accessToken'))
     })
   })
+
+  it('Should prevent multiple submits', () => {
+    cy.intercept('POST', /signup/, {
+      statusCode: 200,
+      body: {
+        accessToken: faker.random.uuid()
+      }
+    }).as('request')
+    fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
+    cy.getByTestId('submit').dblclick()
+    cy.get('@request.all').should('have.length', 1)
+  })
 })
