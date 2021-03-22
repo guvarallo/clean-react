@@ -1,3 +1,5 @@
+import faker from 'faker'
+
 import { testInputStatus } from '../support/form-helper'
 
 describe('SignUp', () => {
@@ -8,6 +10,19 @@ describe('SignUp', () => {
     testInputStatus('email', 'invalid', 'Required field', '⚠️')
     testInputStatus('password', 'invalid', 'Required field', '⚠️')
     testInputStatus('passwordConfirmation', 'invalid', 'Required field', '⚠️')
+    cy.getByTestId('submit').should('have.attr', 'disabled')
+    cy.getByTestId('error-wrap').should('not.have.descendants')
+  })
+
+  it('Should present error state if form is invalid', () => {
+    cy.getByTestId('name').type(faker.random.alphaNumeric(1))
+    testInputStatus('name', 'invalid', 'Invalid value', '⚠️')
+    cy.getByTestId('email').type(faker.random.word())
+    testInputStatus('email', 'invalid', 'Invalid value', '⚠️')
+    cy.getByTestId('password').type(faker.random.alphaNumeric(4))
+    testInputStatus('password', 'invalid', 'Invalid value', '⚠️')
+    cy.getByTestId('passwordConfirmation').type(faker.random.alphaNumeric(4))
+    testInputStatus('passwordConfirmation', 'invalid', 'Invalid value', '⚠️')
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
