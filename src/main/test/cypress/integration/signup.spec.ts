@@ -1,6 +1,6 @@
 import faker from 'faker'
 
-import { testInputStatus } from '../support/form-helper'
+import { fillFormCorrectly, testInputStatus } from '../support/form-helper'
 
 describe('SignUp', () => {
   beforeEach(() => cy.visit('signup'))
@@ -24,6 +24,16 @@ describe('SignUp', () => {
     cy.getByTestId('passwordConfirmation').type(faker.random.alphaNumeric(4))
     testInputStatus('passwordConfirmation', 'invalid', 'Invalid value', '⚠️')
     cy.getByTestId('submit').should('have.attr', 'disabled')
+    cy.getByTestId('error-wrap').should('not.have.descendants')
+  })
+
+  it('Should present valid state if form is valid', () => {
+    fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
+    testInputStatus('name', 'valid', 'Looks good', '✔')
+    testInputStatus('email', 'valid', 'Looks good', '✔')
+    testInputStatus('password', 'valid', 'Looks good', '✔')
+    testInputStatus('passwordConfirmation', 'valid', 'Looks good', '✔')
+    cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 })
