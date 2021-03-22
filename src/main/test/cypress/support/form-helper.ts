@@ -1,5 +1,7 @@
 import faker from 'faker'
 
+export const baseUrl: string = Cypress.config().baseUrl
+
 export const testInputStatus = (
   field: string,
   valid: string,

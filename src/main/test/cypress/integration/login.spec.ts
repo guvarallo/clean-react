@@ -1,12 +1,11 @@
 import faker from 'faker'
 
 import {
+  baseUrl,
   testInputStatus,
   fillFormCorrectly,
   submit
 } from '../support/form-helper'
-
-const baseUrl: string = Cypress.config().baseUrl
 
 describe('Login', () => {
   beforeEach(() => cy.visit('login'))
