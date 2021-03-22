@@ -54,4 +54,20 @@ describe('SignUp', () => {
     cy.getByTestId('main-error').should('contain.text', 'Email already in use')
     cy.url().should('eq', `${baseUrl}/signup`)
   })
+
+  it('Should present UnexpectedError with any other statusCode', () => {
+    cy.intercept('POST', /signup/, {
+      statusCode: 400,
+      body: {
+        error: faker.random.words()
+      }
+    })
+    fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
+    submit()
+    cy.getByTestId('main-error').should(
+      'contain.text',
+      'An error has occurred. Try again later'
+    )
+    cy.url().should('eq', `${baseUrl}/signup`)
+  })
 })
