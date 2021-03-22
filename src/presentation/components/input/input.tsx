@@ -32,7 +32,7 @@ const Input: React.FC<Props> = (props: Props) => {
       </label>
       <span
         data-testid={`${props.name}-status`}
-        title={error}
+        title={error || 'Looks good'}
         className={Styles.status}
       >
         {error ? '⚠️' : '✔'}

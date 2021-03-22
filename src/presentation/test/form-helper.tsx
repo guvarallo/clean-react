@@ -30,7 +30,7 @@ export const testStatusForField = (
   const status = sut.getByTestId(`${fieldName}-status`)
   const wrap = sut.getByTestId(`${fieldName}-wrap`)
 
-  expect(status.title).toBe(validationError)
+  expect(status.title).toBe(validationError || 'Looks good')
   expect(status.textContent).toBe(validationError ? '⚠️' : '✔')
   expect(wrap.getAttribute('data-status')).toBe(
     validationError ? 'invalid' : 'valid'

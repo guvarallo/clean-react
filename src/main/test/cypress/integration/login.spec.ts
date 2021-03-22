@@ -1,55 +1,36 @@
 import faker from 'faker'
 
+import {
+  testInputStatus,
+  fillFormCorrectly,
+  submit
+} from '../support/form-helper'
+
 const baseUrl: string = Cypress.config().baseUrl
 
 describe('Login', () => {
   beforeEach(() => cy.visit('login'))
 
   it('Should load with correct initial state', () => {
-    cy.getByTestId('email-wrap').should('have.attr', 'data-status', 'invalid')
-    cy.getByTestId('email-status')
-      .should('have.attr', 'title', 'Required field')
-      .should('contain.text', '⚠️')
-    cy.getByTestId('password-wrap').should(
-      'have.attr',
-      'data-status',
-      'invalid'
-    )
-    cy.getByTestId('password-status')
-      .should('have.attr', 'title', 'Required field')
-      .should('contain.text', '⚠️')
+    testInputStatus('email', 'invalid', 'Required field', '⚠️')
+    testInputStatus('password', 'invalid', 'Required field', '⚠️')
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
   it('Should present error state if form is invalid', () => {
-    cy.getByTestId('email-wrap').should('have.attr', 'data-status', 'invalid')
     cy.getByTestId('email').type(faker.random.word())
-    cy.getByTestId('email-status')
-      .should('have.attr', 'title', 'Invalid value')
-      .should('contain.text', '⚠️')
-    cy.getByTestId('password-wrap').should(
-      'have.attr',
-      'data-status',
-      'invalid'
-    )
+    testInputStatus('email', 'invalid', 'Invalid value', '⚠️')
     cy.getByTestId('password').type(faker.random.alphaNumeric(4))
-    cy.getByTestId('password-status')
-      .should('have.attr', 'title', 'Invalid value')
-      .should('contain.text', '⚠️')
+    testInputStatus('password', 'invalid', 'Invalid value', '⚠️')
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
   it('Should present valid state if form is valid', () => {
-    cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('email-wrap').should('have.attr', 'data-status', 'valid')
-    cy.getByTestId('email-wrap').should('not.have.attr', 'title')
-    cy.getByTestId('email-status').should('contain.text', '✔')
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    cy.getByTestId('password-wrap').should('have.attr', 'data-status', 'valid')
-    cy.getByTestId('password-wrap').should('not.have.attr', 'title')
-    cy.getByTestId('password-status').should('contain.text', '✔')
+    fillFormCorrectly()
+    testInputStatus('email', 'valid', 'Looks good', '✔')
+    testInputStatus('password', 'valid', 'Looks good', '✔')
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
@@ -61,10 +42,8 @@ describe('Login', () => {
         error: faker.random.words()
       }
     })
-    cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    cy.getByTestId('submit').click()
-    cy.getByTestId('spinner').should('not.exist')
+    fillFormCorrectly()
+    submit()
     cy.getByTestId('main-error').should('contain.text', 'Wrong Credentials')
     cy.url().should('eq', `${baseUrl}/login`)
   })
@@ -76,10 +55,8 @@ describe('Login', () => {
         error: faker.random.words()
       }
     })
-    cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    cy.getByTestId('submit').click()
-    cy.getByTestId('spinner').should('not.exist')
+    fillFormCorrectly()
+    submit()
     cy.getByTestId('main-error').should(
       'contain.text',
       'An error has occurred. Try again later'
@@ -94,10 +71,8 @@ describe('Login', () => {
         invalidProperty: faker.random.uuid()
       }
     })
-    cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    cy.getByTestId('submit').click()
-    cy.getByTestId('spinner').should('not.exist')
+    fillFormCorrectly()
+    submit()
     cy.getByTestId('main-error').should(
       'contain.text',
       'An error has occurred. Try again later'
@@ -112,11 +87,9 @@ describe('Login', () => {
         accessToken: faker.random.uuid()
       }
     })
-    cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    cy.getByTestId('submit').click()
+    fillFormCorrectly()
+    submit()
     cy.getByTestId('main-error').should('not.exist')
-    cy.getByTestId('spinner').should('not.exist')
     cy.url().should('eq', `${baseUrl}/`)
     cy.window().then(window => {
       return assert.isOk(window.localStorage.getItem('accessToken'))
@@ -130,8 +103,7 @@ describe('Login', () => {
         accessToken: faker.random.uuid()
       }
     }).as('request')
-    cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
+    fillFormCorrectly()
     cy.getByTestId('submit').dblclick()
     cy.get('@request.all').should('have.length', 1)
   })
