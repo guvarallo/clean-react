@@ -1,7 +1,9 @@
 {
   "name": "clean-react",
   "version": "1.5.0",
-  "description": "",
+  "description": "Survey App using React, TypeScript, Clean Architecture and TDD",
+  "author": "Gustavo Varallo",
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open",
@@ -14,8 +16,6 @@
     "check": "npm-check -u -s"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^5.6.0",
     "@testing-library/react": "^11.2.5",
