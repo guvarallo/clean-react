@@ -87,11 +87,12 @@ describe('SignUp', () => {
     cy.url().should('eq', `${baseUrl}/signup`)
   })
 
-  it('Should save accessToken on success', () => {
+  it('Should save account on success', () => {
     cy.intercept('POST', /signup/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     })
     fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
@@ -99,7 +100,7 @@ describe('SignUp', () => {
     cy.getByTestId('main-error').should('not.exist')
     cy.url().should('eq', `${baseUrl}/`)
     cy.window().then(window => {
-      return assert.isOk(window.localStorage.getItem('accessToken'))
+      return assert.isOk(window.localStorage.getItem('account'))
     })
   })
 
@@ -107,7 +108,8 @@ describe('SignUp', () => {
     cy.intercept('POST', /signup/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     }).as('request')
     fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
@@ -119,7 +121,8 @@ describe('SignUp', () => {
     cy.intercept('POST', /signup/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     }).as('request')
     cy.getByTestId('email').type(faker.internet.email()).type('{enter}')

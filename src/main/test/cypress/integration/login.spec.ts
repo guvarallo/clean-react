@@ -79,11 +79,12 @@ describe('Login', () => {
     cy.url().should('eq', `${baseUrl}/login`)
   })
 
-  it('Should save accessToken if valid credentials are provided', () => {
+  it('Should save account if valid credentials are provided', () => {
     cy.intercept('POST', /login/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     })
     fillFormCorrectly('email', 'password')
@@ -91,7 +92,7 @@ describe('Login', () => {
     cy.getByTestId('main-error').should('not.exist')
     cy.url().should('eq', `${baseUrl}/`)
     cy.window().then(window => {
-      return assert.isOk(window.localStorage.getItem('accessToken'))
+      return assert.isOk(window.localStorage.getItem('account'))
     })
   })
 
@@ -99,7 +100,8 @@ describe('Login', () => {
     cy.intercept('POST', /login/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     }).as('request')
     fillFormCorrectly('email', 'password')
@@ -111,7 +113,8 @@ describe('Login', () => {
     cy.intercept('POST', /login/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     }).as('request')
     cy.getByTestId('email').type(faker.internet.email()).type('{enter}')
