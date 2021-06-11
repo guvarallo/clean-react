@@ -1,7 +1,9 @@
 import React from 'react'
-import faker from 'faker'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
+
+import { EmailInUseError } from '@/domain/errors'
+import { AccountModel } from '@/domain/models'
+import { ApiContext } from '@/presentation/contexts'
+import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test'
 import {
   cleanup,
   fireEvent,
@@ -9,12 +11,11 @@ import {
   RenderResult,
   waitFor
 } from '@testing-library/react'
+import faker from 'faker'
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
 
 import SignUp from './signup'
-import { ApiContext } from '@/presentation/contexts'
-import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test'
-import { EmailInUseError } from '@/domain/errors'
-import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
   sut: RenderResult

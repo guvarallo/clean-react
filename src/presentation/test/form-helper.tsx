@@ -1,6 +1,5 @@
-import faker from 'faker'
-
 import { fireEvent, RenderResult } from '@testing-library/react'
+import faker from 'faker'
 
 export const testChildCount = (
   sut: RenderResult,

@@ -7,10 +7,14 @@
   "extends": [
     "standard-with-typescript",
     "plugin:react/recommended",
-    "plugin:cypress/recommended"
+    "plugin:cypress/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   "env": { "cypress/globals": true },
-  "plugins": ["react", "cypress"],
+  "plugins": ["react", "cypress", "import"],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig-eslint.json"
   },
@@ -24,6 +28,27 @@
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/indent": "off",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   }
 }

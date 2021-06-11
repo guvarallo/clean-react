@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
 
 import { Authentication } from '@/domain/usecases'
 import {
@@ -11,6 +10,7 @@ import {
 } from '@/presentation/components'
 import { ApiContext, FormContext } from '@/presentation/contexts/'
 import { Validation } from '@/presentation/protocols/validation'
+import { Link, useHistory } from 'react-router-dom'
 
 import Styles from './login-styles.scss'
 

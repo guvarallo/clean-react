@@ -5,3 +5,5 @@ assets
 public
 *.scss
 *.json
+jest.config.js
+webpack.config.js
