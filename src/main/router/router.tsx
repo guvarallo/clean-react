@@ -1,12 +1,12 @@
 import React from 'react'
 
+import ApiContext from '@/presentation/contexts/api/api-context'
+import { SurveyList } from '@/presentation/pages'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { setCurrentAccountAdapter } from '../adapters/current-account-adapter'
 import { makeLogin } from '../factories/pages/login/login-factory'
 import { makeSignUp } from '../factories/pages/signup/signup-factory'
-import ApiContext from '@/presentation/contexts/api/api-context'
-import { SurveyList } from '@/presentation/pages'
 
 const Router: React.FC = () => {
   return (

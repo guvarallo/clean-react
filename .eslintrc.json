@@ -7,48 +7,25 @@
   "extends": [
     "standard-with-typescript",
     "plugin:react/recommended",
-    "plugin:cypress/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript"
+    "plugin:cypress/recommended"
   ],
-  "env": { "cypress/globals": true },
-  "plugins": ["react", "cypress", "import"],
-  "parser": "@typescript-eslint/parser",
+  "env": {
+    "cypress/globals": true
+  },
+  "plugins": ["react", "cypress"],
   "parserOptions": {
     "project": "./tsconfig-eslint.json"
   },
   "rules": {
-    "space-before-function-paren": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/comma-spacing": "off",
     "@typescript-eslint/return-await": "off",
-    "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "no-redeclare": "off",
+    "import/export": "off",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error",
-    "import/no-unresolved": 0,
-    "import/extensions": 0,
-    "import/order": [
-      "warn",
-      {
-        "groups": ["builtin", "external", "internal"],
-        "pathGroups": [
-          {
-            "pattern": "react",
-            "group": "external",
-            "position": "before"
-          }
-        ],
-        "pathGroupsExcludedImportTypes": ["react"],
-        "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        }
-      }
-    ]
+    "react/jsx-uses-vars": "error"
   }
 }
