@@ -75,7 +75,7 @@ describe('SignUp', () => {
     cy.intercept('POST', /signup/, {
       statusCode: 200,
       body: {
-        invalidProperty: faker.random.uuid()
+        invalidProperty: faker.datatype.uuid()
       }
     })
     fillFormCorrectly('email', 'password', 'name', 'passwordConfirmation')
@@ -91,7 +91,7 @@ describe('SignUp', () => {
     cy.intercept('POST', /signup/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid(),
+        accessToken: faker.datatype.uuid(),
         name: faker.name.findName()
       }
     })
@@ -108,7 +108,7 @@ describe('SignUp', () => {
     cy.intercept('POST', /signup/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid(),
+        accessToken: faker.datatype.uuid(),
         name: faker.name.findName()
       }
     }).as('request')
@@ -121,7 +121,7 @@ describe('SignUp', () => {
     cy.intercept('POST', /signup/, {
       statusCode: 200,
       body: {
-        accessToken: faker.random.uuid(),
+        accessToken: faker.datatype.uuid(),
         name: faker.name.findName()
       }
     }).as('request')
