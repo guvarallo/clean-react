@@ -1,10 +1,5 @@
 import React from 'react'
 
-import { InvalidCredentialsError } from '@/domain/errors'
-import { AccountModel } from '@/domain/models'
-import { ApiContext } from '@/presentation/contexts'
-import { Login } from '@/presentation/pages'
-import { ValidationStub, AuthenticationSpy, Helper } from '@/presentation/test'
 import {
   render,
   RenderResult,
@@ -15,6 +10,12 @@ import {
 import faker from 'faker'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
+
+import { InvalidCredentialsError } from '@/domain/errors'
+import { AccountModel } from '@/domain/models'
+import { ApiContext } from '@/presentation/contexts'
+import { Login } from '@/presentation/pages'
+import { ValidationStub, AuthenticationSpy, Helper } from '@/presentation/test'
 
 type SutTypes = {
   sut: RenderResult

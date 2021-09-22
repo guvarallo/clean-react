@@ -1,7 +1,7 @@
-import { FieldValidationSpy } from '@/validation/test'
 import faker from 'faker'
 
 import { ValidationComposite } from './validation-composite'
+import { FieldValidationSpy } from '@/validation/test'
 
 type SutTypes = {
   sut: ValidationComposite

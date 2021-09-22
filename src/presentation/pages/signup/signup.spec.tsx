@@ -1,9 +1,5 @@
 import React from 'react'
 
-import { EmailInUseError } from '@/domain/errors'
-import { AccountModel } from '@/domain/models'
-import { ApiContext } from '@/presentation/contexts'
-import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test'
 import {
   cleanup,
   fireEvent,
@@ -16,6 +12,10 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 
 import SignUp from './signup'
+import { EmailInUseError } from '@/domain/errors'
+import { AccountModel } from '@/domain/models'
+import { ApiContext } from '@/presentation/contexts'
+import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test'
 
 type SutTypes = {
   sut: RenderResult

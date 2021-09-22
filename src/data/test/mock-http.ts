@@ -1,3 +1,5 @@
+import faker from 'faker'
+
 import {
   HttpGetClient,
   HttpGetParams,
@@ -6,7 +8,6 @@ import {
   HttpResponse,
   HttpStatusCode
 } from '@/data/protocols/http'
-import faker from 'faker'
 
 export class HttpPostClientSpy<R> implements HttpPostClient<R> {
   url?: string

@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 
+import { Link, useHistory } from 'react-router-dom'
+
+import Styles from './signup-styles.scss'
 import { AddAccount } from '@/domain/usecases'
 import {
   Footer,
@@ -10,9 +13,6 @@ import {
 } from '@/presentation/components'
 import { ApiContext, FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
-import { Link, useHistory } from 'react-router-dom'
-
-import Styles from './signup-styles.scss'
 
 type Props = {
   validation: Validation
