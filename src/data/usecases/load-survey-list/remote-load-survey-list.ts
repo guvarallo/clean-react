@@ -4,12 +4,12 @@ import { SurveyModel } from '@/domain/models'
 import { LoadSurveyList } from '@/domain/usecases'
 
 export class RemoteLoadSurveyList implements LoadSurveyList {
-  constructor(
+  constructor (
     private readonly url: string,
     private readonly httpGetClient: HttpGetClient<SurveyModel[]>
   ) {}
 
-  async loadAll(): Promise<SurveyModel[]> {
+  async loadAll (): Promise<SurveyModel[]> {
     const httpResponse = await this.httpGetClient.get({ url: this.url })
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
